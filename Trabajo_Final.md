@@ -88,9 +88,9 @@ datos_std1 = np.std(legumes['Altura (cm)'], ddof=1)
 print (datos1)
 print (datos_std1)
 ````
-28.400000000000002
+media altura: 28.400000000000002
 
-2.7882871901124995
+desviación estandar altura: 2.7882871901124995
 
 
 ````python
@@ -100,40 +100,41 @@ datos_std2 = np.std(legumes['Humedad (%)'], ddof=1)
 print (datos2)
 print (datos_std2)
 ````
-59.583333333333336
+media humedad: 59.583333333333336
 
 
-2.874917653629668
+desviación estandar humedad: 2.874917653629668
 
 ## Test
 
-Se aplica el normal test para las dos variables. Esto sirve para determinar si las dos variables siguen una distribución normal. 
-Ademas, se aplica el t test 
-````python
-print(ss.normaltest(legumes['Altura (cm)'], axis=0, nan_policy='propagate'))
-print(ss.shapiro(legumes['Altura (cm)']))
+Se aplica el *normal test* para las dos variables. Esto sirve para determinar si las dos variables siguen una distribución normal. Se utiliza para verificar la suposición de normalidad en el análisis estadístico paramétrico.
+
+Ademas, se aplica el *t test* que es una prueba estadística utilizada para determinar si hay diferencias significativas entre las medias de dos variables. Es una prueba paramétrica que produce un valor de *t-statistic* y un *p value* asociado.
+Se realiza el *t test* para dos muestras independientes.
+
+
+El resultado del normal test es el siguiente para altura y humedad respectivamente:
 ````
 NormaltestResult(statistic=1.8910785976421935, pvalue=0.38847001297963046)
 ShapiroResult(statistic=0.9330066442489624, pvalue=0.41307348012924194)
 
-````python
-print(ss.normaltest(legumes['Humedad (%)'], axis=0, nan_policy='propagate'))
-print(ss.shapiro(legumes['Humedad (%)']))
-````
+
 NormaltestResult(statistic=1.1365060230180863, pvalue=0.5665142686180424)
 ShapiroResult(statistic=0.9658291339874268, pvalue=0.8626019954681396)
+````
 
-````python 
-ss.ttest_ind(legumes['Altura (cm)'], legumes['Humedad (%)'], axis=0, equal_var=True, nan_policy='propagate', permutations=None, random_state=None, alternative='two-sided', trim=0)
-ss.ttest_ind_from_stats(datos1, datos_std1, n1, datos2, datos_std2, n2, equal_var=True, alternative='two-sided')
+
+
+El resultado del t test para altura y humedad es el siguiente: 
+
 ````
 Ttest_indResult(statistic=-13.53353895715043, pvalue=0.00016243814853461255)
+````
 
-***Los reultados indican que no se tiene evidencia suficiente para rechazar la hipótesis nula de que los datos siguen una distribución normal. Por lo tanto coinciden con una distribución normal.***
 
-***Ademas, segun los resultados del t test, hay una diferencia significativa entre las medias de las dos muestras. La media de la primera muestra es significativamente menor que la media de la segunda muestra.***
+***Los resultados del normal test indican que no se tiene evidencia suficiente para rechazar la hipótesis nula de que los datos siguen una distribución normal. Por lo tanto se puede asumir una distribución normal.***
 
-***Por lo tanto, el resultado indica que hay una diferencia estadísticamente significativa entre las medias de las dos muestras y que la media de la primera muestra es significativamente menor que la media de la segunda muestra.*** 
+***Ademas, segun los resultados del t test, hay una diferencia significativa entre las medias de las dos muestras. La media de la primera muestra es significativamente menor que la media de la segunda muestra. Por lo tanto, el resultado indica que hay una diferencia estadísticamente significativa entre las medias de las dos muestras y que la media de la primera muestra es significativamente menor que la media de la segunda muestra.*** 
 
 ## Tabla de contingencia
 
@@ -162,5 +163,19 @@ Valor p: 0.022773309501244822
 
 ## Regresión lineal
 
+Se evalua el ajuste de la recta de regresión y la relación entre las variables Altura y Humedad para ver como es la correlación entre estas dos variables.
+
+Los resultados de la regresion y el grafico de la recta se muestran a continuación:
+
+````
+(r): 0.38672191231018677
+P value: 0.21429805054468382
+Coeficiente de regresión (pendiente): 0.3987371375116933
+Error estándar: 0.3006846923850679
+````
+
 
 ![Alt text](image-2.png)
+
+***El valor del coeficiente de regresión (r) indica una correlación positiva moderada entre la humedad y la altura. Esto significa que a medida que la humedad aumenta, es probable que la altura de las plantas también aumente, pero la relación no es muy fuerte. El P value indica que la correlación observada puede ser el resultado del azar y no ser estadísticamente significativa.***
+
