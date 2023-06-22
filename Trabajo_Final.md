@@ -28,15 +28,17 @@ legumes
 
 Las variables medidas en la muestra de leguminosas incluyen:
 
-1) Leguminosa: Es una variable categórica que identifica el tipo de leguminosa en cada muestra. En la tabla, se utilizan las categorías Glyicine max, Phaseolus vulgaris y Medicago truncatula para representar diferentes tipos de leguminosas.
+1) Leguminosa: Variable categórica que identifica el tipo de leguminosa en cada muestra. En la tabla, se utilizan las categorías *Glyicine max*, *Phaseolus vulgaris* y *Medicago truncatula* para representar diferentes tipos de leguminosas.
 
-2) Población: Es una variable discreta que indica la cantidad de leguminosas en cada muestra.
+2) Población: Variable discreta que indica la cantidad de leguminosas en cada muestra.
 
-3) Altura (cm): Es una variable continua que representa la altura de las leguminosas en centímetros. La altura es una medida cuantitativa que se utiliza para evaluar el crecimiento vertical de las plantas.
+3) Altura (cm): Variable continua que representa la altura de las leguminosas en centímetros. La altura es una medida cuantitativa que se utiliza para evaluar el crecimiento de las plantas.
 
-4) Temperatura (°C): Es una variable continua que indica la temperatura en grados Celsius en el entorno donde se cultivaron las leguminosas. La temperatura es una medida cuantitativa que puede influir en el crecimiento y desarrollo de las plantas.
+4) Temperatura (°C): Variable continua que indica la temperatura en grados Celsius en el entorno donde se cultivaron las leguminosas. La temperatura es una medida cuantitativa que puede influir en el crecimiento y desarrollo de las plantas.
 
-5) Humedad (%): Es una variable continua que representa el nivel de humedad relativa en el entorno donde se cultivaron las leguminosas, expresado en porcentaje. La humedad es una medida cuantitativa que puede afectar el crecimiento y la salud de las plantas.
+5) Humedad (%): Variable continua que representa el nivel de humedad relativa donde se cultivaron las leguminosas, expresado en porcentaje. La humedad es una medida cuantitativa que puede afectar el crecimiento de las plantas.
+
+6) Crecimiento: Variable categórica que indica si es el crecimiento es óptimo o deficiente. 
 
 Se ha establecido que las plantas con una altura igual o superior a 28 cm se consideran de crecimiento óptimo, 
 mientras que las plantas con una altura inferior a 28 cm se consideran de crecimiento deficientes.
@@ -69,30 +71,15 @@ Se obtuvieron las siguientes distribuciones de frecuencia de las variables humed
 
 
 
-Calculo del tamaño muestral
+## Cálculo del tamaño muestral
 
-````python
-effect_size = abs((legumes['Altura (cm)'].max()-legumes['Altura (cm)'].min())/legumes['Altura (cm)'].std())   
-# diferencia de medias esperada
-alpha = 0.05      # nivel de significancia
-power = 0.8       # potencia
-ratio = 1         # relación entre los tamaños de las muestras
-n1 = smp.tt_ind_solve_power(effect_size=effect_size, alpha=alpha, power=power, ratio=ratio)
-print("El tamaño muestral necesario es:", round(n))
-````
-El tamaño muestral necesario es: 3
+Se calcula el tamaño muestral necesario para las variables de altura y humedad. 
 
+***En ambos casos el tamaño muestral necesario es 3***
 
-````python
-effect_size = abs((legumes['Humedad (%)'].max()-legumes['Humedad (%)'].min())/legumes['Humedad (%)'].std())   
-# diferencia de medias esperada
-alpha = 0.05      # nivel de significancia
-power = 0.8       # potencia
-ratio = 1         # relación entre los tamaños de las muestras
-n2 = smp.tt_ind_solve_power(effect_size=effect_size, alpha=alpha, power=power, ratio=ratio)
-print("El tamaño muestral necesario es:", round(n))
-````
-El tamaño muestral necesario es: 3
+## Media y desviación estandar
+
+A continuación se muestra el codigo y resultados del calculo de media y desviación estandar para las variables altura y humedad
 
 ````python 
 # Calcular la media y la desviación estándar de altura
@@ -119,14 +106,14 @@ print (datos_std2)
 2.874917653629668
 
 ## Test
+
+Se aplica 
 ````python
 print(ss.normaltest(legumes['Altura (cm)'], axis=0, nan_policy='propagate'))
 print(ss.shapiro(legumes['Altura (cm)']))
 ````
 NormaltestResult(statistic=1.8910785976421935, pvalue=0.38847001297963046)
 ShapiroResult(statistic=0.9330066442489624, pvalue=0.41307348012924194)
-c:\Users\dardo\anaconda3\lib\site-packages\scipy\stats\_stats_py.py:1736: UserWarning: kurtosistest only valid for n>=20 ... continuing anyway, n=12
-  warnings.warn("kurtosistest only valid for n>=20 ... continuing 
 
 ````python
 print(ss.normaltest(legumes['Humedad (%)'], axis=0, nan_policy='propagate'))
@@ -141,9 +128,38 @@ ss.ttest_ind_from_stats(datos1, datos_std1, n1, datos2, datos_std2, n2, equal_va
 ````
 Ttest_indResult(statistic=-13.53353895715043, pvalue=0.00016243814853461255)
 
-***Se puede concluir que no se tiene evidencia suficiente para rechazar la hipótesis nula de que los datos siguen una distribución normal. Esto sugiere que los datos son consistentes con una distribución normal.se puede concluir que hay evidencia estadística para rechazar la hipótesis nula.***
+***Los reultados indican que no se tiene evidencia suficiente para rechazar la hipótesis nula de que los datos siguen una distribución normal. Por lo tanto coinciden con una distribución normal.***
 
-***Ademas hay una diferencia significativa entre las medias de las dos muestras. La media de la primera muestra es significativamente menor que la media de la segunda muestra.***
+***Ademas, segun los resultados del t test, hay una diferencia significativa entre las medias de las dos muestras. La media de la primera muestra es significativamente menor que la media de la segunda muestra.***
 
-***En resumen, el resultado sugiere que hay una diferencia estadísticamente significativa entre las medias de las dos muestras y que la media de la primera muestra es significativamente menor que la media de la segunda muestra.*** 
+***Por lo tanto, el resultado indica que hay una diferencia estadísticamente significativa entre las medias de las dos muestras y que la media de la primera muestra es significativamente menor que la media de la segunda muestra.*** 
 
+## Tabla de contingencia
+
+Se generó una tabla de contingencia a partir de los datos de altura y crecimiento tomando como punto de corte altura igual a 28 centimetros. Si ese valor es igual o mayo, el crecimiento de la planta es óptimo. 
+
+### Tabla de contingencia
+
+````
+Crecimiento  False  True 
+Altura (cm)              
+False            4      1
+True             0      7
+Empty DataFrame
+Columns: [False, True]
+Index: []
+````
+A continuación se aplica el test de *chi cuadrado*. Sirve como prueba prueba estadística para determinar si existe una asociación significativa entre dos variables y evaluar si las diferencias observadas son significativas o si pueden ser atribuidas al azar.
+
+Resultado del test: 
+
+Chi cuadrado: 5.185714285714285
+
+Valor p: 0.022773309501244822
+
+***Estos resultados indican que hay una diferencia significativa entre las variables en la tabla de contingencia.***
+
+## Regresión lineal
+
+
+![Alt text](image-2.png)
