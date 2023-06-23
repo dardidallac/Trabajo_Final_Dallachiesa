@@ -138,7 +138,7 @@ Ttest_indResult(statistic=-13.53353895715043, pvalue=0.00016243814853461255)
 
 ## Tabla de contingencia
 
-Se generó una tabla de contingencia a partir de los datos de altura y crecimiento tomando como punto de corte altura igual a 28 centimetros. Si ese valor es igual o mayo, el crecimiento de la planta es óptimo. 
+Se generó una tabla de contingencia a partir de los datos de altura y crecimiento tomando como punto de corte altura igual a 28 centimetros. Si ese valor es igual o mayor, el crecimiento de la planta es óptimo. 
 
 ### Tabla de contingencia
 
@@ -151,7 +151,7 @@ Empty DataFrame
 Columns: [False, True]
 Index: []
 ````
-A continuación se aplica el test de *chi cuadrado*. Sirve como prueba prueba estadística para determinar si existe una asociación significativa entre dos variables y evaluar si las diferencias observadas son significativas o si pueden ser atribuidas al azar.
+A continuación se aplica el test de *chi cuadrado*. Sirve como prueba estadística para determinar si existe una asociación significativa entre dos variables y evaluar si las diferencias observadas son significativas o si pueden ser atribuidas al azar.
 
 Resultado del test: 
 
